@@ -177,22 +177,52 @@ const App = () => {
         }}
         className="w-full h-52"
       />
-      <View className="items-center mt-8">
-        <Text className="text-center text-3xl font-bold">
-          Do you want to contribute to our platform?
-        </Text>
-        <Text className="text-center text-gray-500 mt-4 mb-8">
-          We thank you for your generosity!
-        </Text>
-        <TouchableOpacity
-          onPress={toggleModal}
-          className="bg-green-900 py-8 m-1 px-16 rounded-3xl"
-        >
-          <Text className="text-white font-semibold text-3xl">
-            Open the form
+      <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+        <View className="items-center mt-8 m-3">
+          <Text className="text-center text-xl font-bold">
+            Hello. Welcome to the Robotics, Software, and Al Technical Adverse
+            Incidents Reporting System (TechAIRS) for reporting unusual events
+            from a robot, software or artificial intelligence system during
+            military work in a NATO country.
           </Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={toggleModal}
+            className="bg-green-900 py-6  m-1 px-16 rounded-full"
+          >
+            <Text className="text-white font-semibold text-xl text-center">
+              Send a raport
+            </Text>
+          </TouchableOpacity>
+
+          <View className=" ">
+            <Text className=" text-gray-500 mt-4">
+              This is a beta but functional version of the system.
+            </Text>
+            <Text className=" text-gray-500 mt-4">
+              The purpose of TechAIRS is to receive data on these unusual/
+              unexpected events, in order to understand and ultimately inform
+              corrections to these systems and operational decision-making.
+            </Text>
+            <Text className=" text-gray-500 mt-4">
+              The system is encrypted for all responses:
+            </Text>
+            <Text className=" text-gray-500 mt-4">
+              - For all responses, we use HTTPS to protect the data in transit
+            </Text>
+            <Text className=" text-gray-500 mt-4">
+              - Everything is stored on a secure server, encrypted at rest
+            </Text>
+            <Text className=" text-gray-500 mt-4">
+              - Even though everything is encrypted, you can also choose to
+              remain anonymous.
+            </Text>
+            <Text className=" text-gray-500 mt-4">
+              Thank you very much for your participation. We hope to be able to
+              save lives with this information.
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
       <Modal
         visible={isModalVisible}
         onRequestClose={toggleModal}
@@ -201,7 +231,9 @@ const App = () => {
         <View className="flex-1 bg-white p-5">
           <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
             <View className="mb-4">
-              <Text className="text-gray-800 font-semibold">Anonymous</Text>
+              <Text className="text-gray-800 font-semibold">
+                Would you like this to be anonymous?
+              </Text>
               <TouchableOpacity
                 onPress={handleCheckboxChange}
                 className={`bg-gray-200 text-black py-4 px-4 rounded-full mt-2 ${
@@ -315,7 +347,7 @@ const App = () => {
                 className="py-4 px-8 rounded-full border-2 border-green-900"
               >
                 <Text className="text-green-900 text-center font-semibold">
-                  Retour
+                  Return
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
