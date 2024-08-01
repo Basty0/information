@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,9 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Picker } from "@react-native-picker/picker";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+//import * as SQLite from "expo-sqlite";
 
 const countries = [
   "Argentina",
@@ -100,6 +103,10 @@ const App = () => {
   const [data, setData] = useState([]);
   const [anonymous, setAnonymous] = useState(false);
 
+  useEffect(() => {
+    loadData();
+  }, []);
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -113,8 +120,11 @@ const App = () => {
     setAnonymous(!anonymous);
   };
 
-  const saveData = () => {
-    setData([...data, formData]);
+  const saveData = async () => {
+    const updatedData = [...data, formData];
+    console.log(updatedData);
+    setData(updatedData);
+    await AsyncStorage.setItem("formData", JSON.stringify(updatedData));
     toggleModal();
     Alert.alert(
       "Success!",
@@ -146,6 +156,17 @@ const App = () => {
       description: "",
       photos: "",
     });
+  };
+
+  const loadData = async () => {
+    try {
+      const savedData = await AsyncStorage.getItem("formData");
+      if (savedData) {
+        setData(JSON.parse(savedData));
+      }
+    } catch (error) {
+      console.log("Error loading data", error);
+    }
   };
 
   return (
@@ -209,7 +230,7 @@ const App = () => {
                 <View className="rounded-full bg-gray-100 mb-4">
                   <Picker
                     selectedValue={formData.city}
-                    onValueChange={(itemValue, itemIndex) =>
+                    onValueChange={(itemValue) =>
                       handleInputChange("city", itemValue)
                     }
                   >
@@ -224,7 +245,7 @@ const App = () => {
                 <View className="rounded-full bg-gray-100 mb-4">
                   <Picker
                     selectedValue={formData.country}
-                    onValueChange={(itemValue, itemIndex) =>
+                    onValueChange={(itemValue) =>
                       handleInputChange("country", itemValue)
                     }
                   >
@@ -291,9 +312,9 @@ const App = () => {
             <View className="flex-row gap-3 justify-center">
               <TouchableOpacity
                 onPress={toggleModal}
-                className="py-4 px-8 rounded-full border-2 border-gree-900"
+                className="py-4 px-8 rounded-full border-2 border-green-900"
               >
-                <Text className="text-gree-900 text-center font-semibold">
+                <Text className="text-green-900 text-center font-semibold">
                   Retour
                 </Text>
               </TouchableOpacity>
